@@ -33,7 +33,7 @@ const state = {
 export class SimplePanel extends PureComponent<Props> {
   render() {
     const { options, data, width, height } = this.props;
-
+    //let name = data.series[0].fields.filter(item=>item.name=='name');
     return (
       <div
         style={{
