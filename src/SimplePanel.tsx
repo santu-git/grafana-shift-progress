@@ -48,31 +48,6 @@ Chart.pluginService.register({
   }
 });
 
-// Chart.helpers.extend(Chart.controllers.doughnut.prototype, {
-//   draw: function() {
-//     originalDoughnutDraw.apply(this, arguments);
-//
-//     var chart = this.chart;
-//     var width = chart.chart.width,
-//         height = chart.chart.height,
-//         ctx = chart.chart.ctx;
-//
-//     var fontSize = (height / 114).toFixed(2);
-//     ctx.font = fontSize + "em sans-serif";
-//     ctx.textBaseline = "middle";
-//
-//     var sum = 0;
-//     for (var i = 0; i < chart.config.data.datasets[0].data.length; i++) {
-//       sum += chart.config.data.datasets[0].data[i];
-//     }
-//
-//     var text = sum,
-//         textX = Math.round((width - ctx.measureText(text).width) / 2),
-//         textY = height / 2;
-//     ctx.fillText(text, textX, textY);
-//   }
-// });
-
 const chartData = {
 
   labels: [
@@ -131,8 +106,8 @@ export class SimplePanel extends PureComponent<Props> {
       if(spent_time_field.length>0){
         slot_spent_time = spent_time_field[0].values.buffer[0];
       }
-      slot_remaining_time_per = (slot_remaining_time/total_time*100).toFixed(2);
-      slot_spent_time_per = (slot_spent_time/total_time*100).toFixed(2);
+      slot_remaining_time_per = Math.round(slot_remaining_time/total_time*100)
+      slot_spent_time_per = Math.round(slot_spent_time/total_time*100)
       this.state.chartData.datasets[0].data = [slot_spent_time_per,slot_remaining_time_per]
     }catch(e){
       console.log(e);
@@ -167,10 +142,14 @@ export class SimplePanel extends PureComponent<Props> {
             tooltips: {
               enabled: false
             },
+            animation: {
+              animateScale: false,
+              animateRotate: false
+            },
             elements: {
               center: {
                 text: slot_spent_time_per+ '%',
-                color: '#FF6384', // Default is #000000
+                color: '#31D647', // Default is #000000
                 fontStyle: 'Arial', // Default is Arial
                 sidePadding: 20 // Defualt is 20 (as a percentage)
               }
