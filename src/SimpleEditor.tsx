@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { FormField, Select,FormLabel } from '@grafana/ui';
+import { Select,FormLabel } from '@grafana/ui';
 import { PanelEditorProps } from '@grafana/data';
 
 import { SimpleOptions } from './types';
