@@ -33,13 +33,22 @@ export class SimplePanel extends PureComponent<Props> {
   render() {
     const { options, data, width, height } = this.props;
     let slot_name='Select Field for Slot name'
+    let total_time= 0
     let slot_remaining_time = 0;
+    let slot_remaining_time_per = 0;
+    let slot_spent_time_per = 0;
     let slot_spent_time = 0;
     try{
       // Set Slot Name field.
       let name = data.series[0].fields.filter(item=>item.name==options.name_field);
       if(name.length>0){
         slot_name = name[0].values.buffer[0];
+      }
+
+      // Set Total Time
+      let total_time_field = data.series[0].fields.filter(item=>item.name==options.total_slot_time_field);
+      if(total_time_field.length>0){
+        total_time = total_time_field[0].values.buffer[0];
       }
 
       // Set Remaining Time
@@ -53,7 +62,9 @@ export class SimplePanel extends PureComponent<Props> {
       if(spent_time_field.length>0){
         slot_spent_time = spent_time_field[0].values.buffer[0];
       }
-      this.state.chartData.datasets[0].data = [slot_spent_time,slot_remaining_time]
+      slot_remaining_time_per = (slot_remaining_time/total_time*100).toFixed(2);
+      slot_spent_time_per = (slot_spent_time/total_time*100).toFixed(2);
+      this.state.chartData.datasets[0].data = [slot_spent_time_per,slot_remaining_time_per]
     }catch(e){
       console.log(e);
     }
@@ -73,6 +84,8 @@ export class SimplePanel extends PureComponent<Props> {
           redraw={true}
           data={chartData}
           options={{
+            responsive: true,
+            maintainAspectRatio: true,
             title: {
               display: true,
               text: slot_name,
@@ -81,20 +94,26 @@ export class SimplePanel extends PureComponent<Props> {
             legend: {
               display: false,
               position: 'right'
-            }
+            },
+            tooltips: {
+              enabled: false
+            },
           }}
         />
 
         <div
           style={{
-            position: 'absolute',
             bottom: 0,
             left: 0,
-            padding: '10px',
+            'font-size': '1.15rem'
+            'padding-left': '5px',
+            'padding-right': '5px',
+            'padding-top': '20px',
+            'padding-bottom': '10px',
+            'text-align': 'center'
           }}
         >
-          <div>Count: {data.series.length}</div>
-          <div>{options.name_field}</div>
+          <p> {slot_spent_time} min out of {total_time} min </p>
         </div>
       </div>
     );

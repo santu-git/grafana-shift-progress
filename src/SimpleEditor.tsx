@@ -9,8 +9,12 @@ export class SimpleEditor extends PureComponent<PanelEditorProps<SimpleOptions>>
     console.log({ ...this.props.options })
     //this.props.onOptionsChange({ ...this.props.options, text: target.value, startTime: target.value, endTime: target.endTime, shiftDuration: target.value });
   };
+
   onNameFieldSlected =(data :any)=>{
     this.props.onOptionsChange({...this.props.options, name_field: data.value})
+  }
+  onTotalFieldSlected =(data :any)=>{
+    this.props.onOptionsChange({...this.props.options, total_slot_time_field: data.value})
   }
   onRemainFieldSlected =(data :any)=>{
     this.props.onOptionsChange({...this.props.options, slot_remain_field: data.value})
@@ -32,6 +36,7 @@ export class SimpleEditor extends PureComponent<PanelEditorProps<SimpleOptions>>
         <h5 className="section-heading">Settings</h5>
         <FormLabel>Slot Name Field</FormLabel>
         <Select options={fields} placeholder="Select Name field" onChange={this.onNameFieldSlected} />
+        <Select options={fields} placeholder="Select Total time field" onChange={this.onTotalFieldSlected} />
         <Select options={fields} placeholder="Select Remaining Field" onChange={this.onRemainFieldSlected} />
         <Select options={fields} placeholder="Select elapsed Field" onChange={this.onSpentFieldSlected} />
       </div>
