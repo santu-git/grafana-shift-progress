@@ -24,7 +24,7 @@
     "@grafana/ui": "next"
   },
   "dependencies": {
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "react-chartjs-2": "^2.9.0"
   }
 }
